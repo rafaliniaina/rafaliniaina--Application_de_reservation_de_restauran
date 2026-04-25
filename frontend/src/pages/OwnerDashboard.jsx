@@ -111,7 +111,7 @@ function RestaurantForm({ restaurant, onClose, onSaved }) {
             <div className="price-options">
               {[[1,'€ Économique'],[2,'€€ Modéré'],[3,'€€€ Gastro']].map(([v,l]) => (
                 <div key={v}
-                  className={`price-option${form.price_range==v?' selected':''}`}
+                  className={`price-option${form.price_range===v?' selected':''}`}
                   onClick={() => setForm(p => ({ ...p, price_range:v }))}>
                   {l}
                 </div>
