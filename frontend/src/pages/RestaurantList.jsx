@@ -77,7 +77,7 @@ export default function RestaurantList() {
     const sp = {};
     Object.entries(filters).forEach(([k,v]) => { if (v) sp[k] = String(v); });
     setSearchParams(sp, { replace:true });
-  }, [filters]);
+  }, [setSearchParams]);
 
   const handleSearch = e => {
     e.preventDefault();
