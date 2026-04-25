@@ -19,7 +19,7 @@ export default function RestaurantDetail() {
       .then(r => setRestaurant(r.data.data))
       .catch(() => { toast.error('Restaurant introuvable'); navigate('/restaurants'); })
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [navigate]);
 
   if (loading) return <div className="loading-center"><div className="spinner" /></div>;
   if (!restaurant) return null;
