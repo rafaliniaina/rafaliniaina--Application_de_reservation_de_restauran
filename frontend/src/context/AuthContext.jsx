@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const AuthContext = createContext(null);
 
-const api = axios.create({ baseURL: '/api' });
+const api = axios.create({ baseURL: '/https://rafaliniaina-application-de-reservation.onrender.com/api' });
 
 api.interceptors.request.use(cfg => {
   const token = localStorage.getItem('token');
