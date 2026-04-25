@@ -28,7 +28,7 @@ export default function ReservationPage() {
       .then(r => setRestaurant(r.data.data))
       .catch(() => { toast.error('Restaurant introuvable'); navigate('/restaurants'); })
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [navigate]);
 
   const handleSubmit = async e => {
     e.preventDefault();
