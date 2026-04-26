@@ -155,21 +155,24 @@ export default function OwnerDashboard() {
   const [modal,        setModal]        = useState(null);
 
   const load = useCallback(async () => {
-    setLoading(true);
-    try {
-      if (tab === 'restaurants') {
-        const r = await api.get('/owner/restaurants');
-        setRestaurants(r.data.data);
-      } else if (tab === 'reservations') {
-        const r = await api.get('/owner/reservations');
-        setReservations(r.data.data);
-      } else if (tab === 'stats') {
-        const r = await api.get('/owner/stats');
-        setStats(r.data.data);
-      }
-    } catch { toast.error('Erreur chargement'); }
-    finally { setLoading(false); }
-  }, [tab]);
+  setLoading(true);
+  try {
+    if (tab === 'restaurants') {
+      const r = await api.get('/owner/restaurants');
+      setRestaurants(r.data.data);
+    } else if (tab === 'reservations') {
+      const r = await api.get('/owner/reservations');
+      setReservations(r.data.data);
+    } else if (tab === 'stats') {
+      const r = await api.get('/owner/stats');
+      setStats(r.data.data);
+    }
+  } catch (err) {
+    toast.error('Erreur chargement');
+  } finally {
+    setLoading(false);
+  }
+ }, [tab]);
 
   useEffect(() => { load(); }, [load]);
 
