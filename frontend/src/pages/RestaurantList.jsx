@@ -66,19 +66,34 @@ export default function RestaurantList() {
   });
 
   useEffect(() => {
+  const fetchRestaurants = async () => {
     setLoading(true);
-    const params = {};
-    Object.entries(filters).forEach(([k,v]) => { if (v) params[k] = v; });
-    api.get('/restaurants', { params })
-      .then(r => { setRestaurants(r.data.data); setPagination(r.data.pagination); })
-      .catch(() => toast.error('Erreur lors du chargement des restaurants'))
-      .finally(() => setLoading(false));
 
-    const sp = {};
-    Object.entries(filters).forEach(([k,v]) => { if (v) sp[k] = String(v); });
-    setSearchParams(sp, { replace:true });
-  }, [setSearchParams]);
+    try {
+      const params = {};
+      Object.entries(filters).forEach(([k, v]) => {
+        if (v) params[k] = v;
+      });
 
+      const r = await api.get("/restaurants", { params });
+      setRestaurants(r.data.data);
+      setPagination(r.data.pagination);
+
+      const sp = {};
+      Object.entries(filters).forEach(([k, v]) => {
+        if (v) sp[k] = String(v);
+      });
+      setSearchParams(sp, { replace: true });
+
+    } catch (err) {
+      toast.error("Erreur lors du chargement des restaurants");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchRestaurants();
+}, [filters, setSearchParams]);
   const handleSearch = e => {
     e.preventDefault();
     setFilters(p => ({ ...p, page:1 }));
