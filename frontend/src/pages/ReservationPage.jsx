@@ -24,11 +24,20 @@ export default function ReservationPage() {
   });
 
   useEffect(() => {
-    api.get(`/restaurants/${id}`)
-      .then(r => setRestaurant(r.data.data))
-      .catch(() => { toast.error('Restaurant introuvable'); navigate('/restaurants'); })
-      .finally(() => setLoading(false));
-  }, [id, navigate]);
+  const fetchRestaurant = async () => {
+    try {
+      const r = await api.get(`/restaurants/${id}`);
+      setRestaurant(r.data.data);
+    } catch (err) {
+      toast.error("Restaurant introuvable");
+      navigate("/restaurants");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchRestaurant();
+ }, [id, navigate]);
 
   const handleSubmit = async e => {
     e.preventDefault();
