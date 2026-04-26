@@ -14,12 +14,21 @@ export default function RestaurantDetail() {
   const [loading,    setLoading]    = useState(true);
   const [tab,        setTab]        = useState('info');
 
-  useEffect(() => {
-    api.get(`/restaurants/${id}`)
-      .then(r => setRestaurant(r.data.data))
-      .catch(() => { toast.error('Restaurant introuvable'); navigate('/restaurants'); })
-      .finally(() => setLoading(false));
-  }, [navigate]);
+ useEffect(() => {
+  const fetchRestaurant = async () => {
+    try {
+      const r = await api.get(`/restaurants/${id}`);
+      setRestaurant(r.data.data);
+    } catch (err) {
+      toast.error("Restaurant introuvable");
+      navigate("/restaurants");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchRestaurant();
+ }, [id, navigate]);
 
   if (loading) return <div className="loading-center"><div className="spinner" /></div>;
   if (!restaurant) return null;
